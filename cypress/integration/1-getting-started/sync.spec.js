@@ -26,4 +26,18 @@ describe('Esperas...', () => {
         cy.get('#lista li span')
         .should('contain', 'Item 2')
     })
+
+    it('Uso do timeout', () => {
+        cy.get('#buttonDelay').click()
+        cy.get('#novoCampo').should('exist')
+       // cy.get('#novoCampo', {timeout: 1000}).should('exist')
+       //cy.wait(5000)
+    })
+
+    it('Should vs Then', () => {
+        cy.get('#buttonListDOM').click()
+        cy.get('#Lista li span').then($el => {
+            expect($el).to.have.length(1)
+        })
+    })
 })
