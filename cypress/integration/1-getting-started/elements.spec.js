@@ -35,11 +35,26 @@ describe('Work with basic elements', () => {
         cy.get('[data-test="dataEscolaridade"]')
         .select('2o grau completo')
         .should('have.value', '2graucomp')
+
+        cy.get('[data-testid="dataEsportes"] option')
+        .should('have.length', 5)
     })
 
     it('Combo Multiplo', () => {
         cy.get('[data-testid="dataEsportes"]')
         .select(['natacao', 'Corrida'])
 
+        cy.get('[data-test="dataEscolaridade"] option')
+        .then($arr => {
+            const values = []
+            $arr.each(function() {
+                values.push(this.innerHTML)
+            })
+            expect(values).to.include.members('["Superior", "Mestrado"]')
+        })
+        
+
     })
+
+    
 });
