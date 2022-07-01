@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import loc from '../../../support/locators'
 
 describe('Teste funcionais', () => {
     beforeEach(() => {
@@ -8,26 +9,26 @@ describe('Teste funcionais', () => {
 
     it('Making a Purchase', function () {
         cy.fixture('userData').as('usuario').then(() => {
-            cy.get('#search_query_top').type('Printed Dress')
-            cy.get('#searchbox > .btn').click()
-            cy.get(':nth-child(2) > .product-container > .right-block > [itemprop="name"] > .product-name')
-                .click()
-            cy.get('#group_1').select('M')
-            cy.get('.exclusive > span').click()
-            cy.get('.button-medium > span').click()
-            cy.get('[title="View my shopping cart"]').should('have.length', 1)
-            cy.get('[title="View my shopping cart"]').click()
-            cy.get('.cart_navigation > .button > span').click()
-            cy.get('#email').type(this.usuario.email)
-            cy.get('#passwd').type(this.usuario.senha)
-            cy.get('#SubmitLogin > span').click()
-            cy.get('.cart_navigation > .button > span').click()
-            cy.get('#cgv').click()
-            cy.get('.cart_navigation > .button > span').click()
-            cy.get('.bankwire').click()
-            cy.get('#cart_navigation > .button > span').click()
+            cy.get(loc.PESQUISARPRODUTO.ESCREVERNOMEPRODUTO).type('Printed Dress')
+            cy.get(loc.PESQUISARPRODUTO.BOTAOPESQUISAR).click()
+            cy.get(loc.CLICARNOMEDOPRODUTO.PRODUTO).click()        
+            cy.get(loc.SELECIONARTAMANHO.TAMANHO).select('M')
+            cy.get(loc.ADDPRODUTONOCARRINHO.CLICARBOTAO).click()
+            cy.get(loc.ADDPRODUTONOCARRINHO.DESEJAPROSSEGUIR).click()
+            cy.get(loc.VALIDARCARRINHO.CART).should('have.length', 1)
+            cy.get(loc.VALIDARCARRINHO.CART).click()
+            cy.get(loc.FAZERCHECKOUT.PROSSEGUIR).click()
+            //realizando o login;
+            cy.get(loc.LOGIN.EMAIL).type(this.usuario.email)
+            cy.get(loc.LOGIN.PASSWORD).type(this.usuario.senha)
+            cy.get(loc.LOGIN.BOTAOLOGIN).click()
+            cy.get(loc.FAZERCHECKOUT.PROSSEGUIR).click()
+            cy.get(loc.SELECIONARCHECKBOX.CHECKBOX).click()
+            cy.get(loc.FAZERCHECKOUT.PROSSEGUIR).click()
+            cy.get(loc.FORMADEPAGAMENTO.SELECIONAR).click()
+            cy.get(loc.CONFIRMARCOMPRA.CONFIRMAR).click()
 
-            cy.get('.cheque-indent > .dark').should('contain', 'Your order on My Store is complete.')
+            cy.get(loc.VALIDARMENSAGEM.MENSAGEM).should('contain', 'Your order on My Store is complete.')
         })
     })
 })
